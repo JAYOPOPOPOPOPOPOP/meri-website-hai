@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV - Free Developer Resources</title>
+<link rel="icon" id="favicon-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ====== ROOT VARIABLES ====== */
+:root {
+  --bg:#0a0a0f; --bg2:#111118; --bg3:#1a1a24;
+  --accent:#00ff88; --accent2:#7c3aed; --accent3:#f59e0b;
+  --text:#e8e8f0; --text2:#9999b0; --border:#2a2a3a;
+  --red:#ff4466; --glow:0 0 20px rgba(0,255,136,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px}
+
+/* ====== LOADING ====== */
+#page-loader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;transition:opacity .4s}
+#page-loader.hide{opacity:0;pointer-events:none}
+.spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader-text{color:var(--text2);font-size:.9rem;font-family:'JetBrains Mono',monospace}
+
+/* ====== NAVBAR ====== */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,15,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:800;color:var(--accent);cursor:pointer;text-decoration:none;user-select:none}
+.nav-logo-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px}
+.nav-logo-icon img{width:36px;height:36px;border-radius:8px;object-fit:cover}
+.nav-links{display:flex;gap:.15rem;align-items:center}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 14px;border-radius:8px;font-size:.88rem;font-weight:600;letter-spacing:.4px;transition:all .2s;cursor:pointer;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);background:rgba(0,255,136,.08)}
+.nav-right{display:flex;gap:.5rem;align-items:center}
+
+/* ====== BUTTONS ====== */
+.btn{padding:8px 18px;border-radius:8px;border:none;font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px;white-space:nowrap}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text2)}
+.btn-outline:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--glow)}
+.btn-purple{background:var(--accent2);color:#fff}
+.btn-purple:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 0 20px rgba(124,58,237,.4)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+
+/* ====== USER INFO NAV ====== */
+.user-chip{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--text2)}
+.badge-admin{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--accent3);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:5px}
+.badge-owner{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.5);color:#f87171;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:5px}
+.badge-staff{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:#4ade80;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:5px}
+.badge-private{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.4);color:#a78bfa;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:4px}
+.rank-select{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:.78rem;cursor:pointer}
+.a-nav-divider{font-size:.68rem;color:var(--text2);padding:.5rem 1rem .2rem;opacity:.6;letter-spacing:.05em}
+/* Announcement bar */
+.ann-bar{padding:.7rem 1.2rem;font-size:.88rem;font-weight:600;text-align:center;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.ann-bar.ann-info{background:rgba(0,150,255,.15);border-bottom:1px solid rgba(0,150,255,.3);color:#60b8ff}
+.ann-bar.ann-success{background:rgba(0,255,136,.1);border-bottom:1px solid rgba(0,255,136,.3);color:var(--accent)}
+.ann-bar.ann-warning{background:rgba(245,158,11,.12);border-bottom:1px solid rgba(245,158,11,.3);color:#fbbf24}
+.ann-bar.ann-error{background:rgba(239,68,68,.12);border-bottom:1px solid rgba(239,68,68,.3);color:#f87171}
+.ann-bar .ann-close{cursor:pointer;opacity:.6;font-size:1rem;margin-left:.5rem;background:none;border:none;color:inherit}
+/* Stat card */
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center}
+.stat-card .stat-num{font-size:2rem;font-weight:800;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.stat-card .stat-lbl{font-size:.75rem;color:var(--text2);margin-top:.2rem}
+/* Page viewer */
+#page-custom{display:none}
+#page-custom.active{display:block}
+.custom-page-content{max-width:860px;margin:0 auto;padding:2rem 1rem}
+.custom-page-content h1,.custom-page-content h2,.custom-page-content h3{color:var(--accent)}
+.custom-page-content a{color:var(--accent2)}
+.custom-page-content p{line-height:1.7;color:var(--text);margin-bottom:1rem}
+/* Page edit inline */
+.pg-edit-card{background:var(--bg);border:1px solid var(--accent2);border-radius:10px;padding:1rem;margin-top:.5rem}
+
+
+/* ====== PAGES ====== */
+main{padding-top:64px;min-height:100vh}
+.page{display:none;padding:3rem 2rem;max-width:1200px;margin:0 auto}
+.page.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ====== HOME ====== */
+.hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(0,255,136,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero>*{position:relative;z-index:1}
+.hero-badge{display:inline-block;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--accent);padding:5px 16px;border-radius:20px;font-size:.76rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'JetBrains Mono',monospace;font-size:clamp(2.2rem,6vw,5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:1.05rem;color:var(--text2);max-width:680px;margin:0 auto 2.5rem;line-height:1.75}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:4rem}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.8rem;transition:all .3s}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,255,136,.1)}
+.feature-icon{font-size:2.2rem;margin-bottom:1rem}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.feature-card p{font-size:.86rem;color:var(--text2);line-height:1.65}
+
+/* ====== SECTION HEADER ====== */
+.sec-title{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:800;margin-bottom:.4rem}
+.sec-title span{color:var(--accent)}
+.sec-sub{color:var(--text2);font-size:.88rem;margin-bottom:2rem}
+
+/* ====== CATEGORY TABS ====== */
+.cat-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.cat-tab{padding:7px 18px;border-radius:8px;background:var(--bg2);border:1.5px solid var(--border);color:var(--text2);cursor:pointer;font-weight:600;font-size:.84rem;transition:all .2s;user-select:none}
+.cat-tab:hover,.cat-tab.active{background:rgba(0,255,136,.1);border-color:var(--accent);color:var(--accent)}
+
+/* ====== FILES GRID ====== */
+.files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1rem}
+.file-card{background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:1.2rem;transition:all .2s;display:flex;flex-direction:column}
+.file-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.file-cat-icon{font-size:2rem;margin-bottom:.7rem}
+.file-name{font-weight:700;font-size:.95rem;margin-bottom:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-desc{font-size:.82rem;color:var(--text2);margin-bottom:.8rem;line-height:1.55;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.file-meta{font-size:.74rem;color:var(--text2);margin-bottom:.8rem;display:flex;align-items:center;gap:6px}
+.file-size-badge{background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace}
+.dl-btn{display:block;text-align:center;padding:8px;border-radius:8px;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.dl-btn:hover{background:var(--accent);color:#000}
+
+/* ====== EMPTY STATE ====== */
+.empty-state{text-align:center;padding:4rem 2rem;background:var(--bg2);border:1px dashed var(--border);border-radius:14px;grid-column:1/-1}
+.empty-icon{font-size:3rem;margin-bottom:1rem;display:block}
+.empty-state p{color:var(--text2);font-size:.9rem;line-height:1.6}
+
+/* ====== DISCORD PAGE ====== */
+.discord-hero{background:linear-gradient(135deg,#5865f2 0%,#7c3aed 100%);border-radius:20px;padding:3rem;text-align:center;margin-bottom:2.5rem}
+.discord-hero h2{font-size:2rem;font-weight:800;margin-bottom:.8rem;font-family:'JetBrains Mono',monospace}
+.discord-hero p{opacity:.9;margin-bottom:1.8rem;font-size:1rem}
+.discord-join-btn{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#5865f2;padding:12px 30px;border-radius:10px;font-weight:800;text-decoration:none;font-size:1rem;transition:all .2s}
+.discord-join-btn:hover{transform:scale(1.04);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+
+/* ====== PARTNERS ====== */
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
+.partner-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s}
+.partner-card:hover{border-color:var(--accent3);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.p-banner{height:90px;background:linear-gradient(135deg,var(--bg3),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden}
+.p-banner img{width:100%;height:100%;object-fit:cover}
+.p-body{padding:1.2rem}
+.p-body h3{font-weight:700;margin-bottom:.4rem;font-size:1rem}
+.p-body .p-desc{font-size:.84rem;color:var(--text2);margin-bottom:.9rem;line-height:1.55}
+.p-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem}
+.tag{padding:3px 10px;border-radius:6px;background:rgba(124,58,237,.14);border:1px solid rgba(124,58,237,.3);color:#a78bfa;font-size:.73rem;font-weight:600}
+.mc-ip-row{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--bg3);padding:7px 11px;border-radius:7px;margin-bottom:.9rem;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.copy-btn{background:none;border:none;color:var(--accent);cursor:pointer;font-size:.76rem;font-weight:700;padding:2px 6px}
+.copy-btn:hover{background:rgba(0,255,136,.1);border-radius:4px}
+.p-links{display:flex;gap:.5rem}
+
+/* ====== PROMO PAGE ====== */
+.promo-sec{margin-bottom:3rem}
+.promo-sec h2{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:800;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.status-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:500px}
+.status-card h3{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:700;margin-bottom:1rem;line-height:1.5}
+.status-row{display:flex;align-items:center;gap:10px;font-size:.9rem;margin-bottom:.6rem}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-green{background:var(--accent);box-shadow:0 0 8px var(--accent);animation:dotPulse 2s infinite}
+.dot-red{background:var(--red)}
+.dot-gray{background:var(--text2)}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.players-bar{margin:1rem 0;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.players-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width 1s}
+.players-text{font-size:.82rem;color:var(--text2);margin-top:.4rem}
+
+/* ====== AUTH MODAL ====== */
+#auth-modal{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+#auth-modal.open{display:flex}
+.auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:2.5rem;width:390px;max-width:96vw;position:relative;animation:fadeUp .25s ease}
+.auth-box h2{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;margin-bottom:.3rem;color:var(--accent)}
+.auth-box .auth-sub{color:var(--text2);font-size:.87rem;margin-bottom:1.8rem}
+.auth-tabs{display:flex;gap:.5rem;margin-bottom:1.8rem}
+.auth-tab{flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-weight:700;cursor:pointer;transition:all .2s;font-family:'Space Grotesk',sans-serif;font-size:.88rem}
+.auth-tab.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text2);font-size:1.3rem;cursor:pointer;padding:4px;border-radius:6px;line-height:1}
+.modal-close:hover{color:var(--red);background:rgba(255,68,102,.1)}
+.alert{padding:10px 14px;border-radius:8px;font-size:.84rem;margin-bottom:1rem;line-height:1.5}
+.alert-ok{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--accent)}
+.alert-err{background:rgba(255,68,102,.1);border:1px solid rgba(255,68,102,.3);color:var(--red)}
+
+/* ====== FORMS ====== */
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:5px;letter-spacing:.3px}
+.form-control{width:100%;padding:10px 12px;background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+.form-control:focus{border-color:var(--accent)}
+textarea.form-control{resize:vertical;min-height:85px}
+select.form-control{cursor:pointer}
+.form-hint{font-size:.74rem;color:var(--text2);margin-top:4px}
+
+/* ====== ADMIN PANEL ====== */
+#admin-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.87);backdrop-filter:blur(10px)}
+#admin-overlay.open{display:flex}
+#admin-sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);height:100%;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column}
+#admin-body{flex:1;overflow-y:auto;padding:2rem;background:var(--bg)}
+.admin-hdr{padding:1.4rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.admin-hdr h2{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:800;color:var(--accent)}
+.admin-close-btn{background:none;border:none;color:var(--text2);font-size:1.3rem;cursor:pointer;padding:4px;border-radius:6px}
+.admin-close-btn:hover{color:var(--red)}
+.admin-nav{padding:.8rem;flex:1}
+.a-nav-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;cursor:pointer;color:var(--text2);font-size:.86rem;font-weight:600;transition:all .2s;margin-bottom:2px;user-select:none}
+.a-nav-item:hover,.a-nav-item.active{background:rgba(0,255,136,.08);color:var(--accent)}
+.a-nav-icon{width:20px;text-align:center;font-size:.95rem;flex-shrink:0}
+.a-section{display:none}
+.a-section.active{display:block}
+.a-section>h3{font-family:'JetBrains Mono',monospace;font-size:1.15rem;font-weight:800;margin-bottom:1.5rem;color:var(--accent)}
+.a-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem}
+.a-card h4{font-size:.88rem;font-weight:700;margin-bottom:1rem;color:var(--text)}
+.a-card h4 .hint{font-size:.73rem;font-weight:400;color:var(--text2);margin-left:6px}
+
+/* Color pickers */
+.color-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.color-row{display:flex;align-items:center;gap:8px}
+.color-row input[type=color]{width:36px;height:36px;border-radius:7px;border:2px solid var(--border);cursor:pointer;padding:2px;background:var(--bg3)}
+
+/* Upload zone */
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:1.8rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3);position:relative}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(0,255,136,.03)}
+.upload-zone .uz-icon{font-size:2.4rem;margin-bottom:.4rem;display:block}
+.upload-zone p{color:var(--text2);font-size:.85rem}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-progress{height:6px;background:var(--bg3);border-radius:3px;margin-top:.8rem;overflow:hidden;display:none}
+.upload-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .3s}
+.selected-file{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);border-radius:7px;padding:7px 10px;font-size:.82rem;margin-top:.6rem;display:none;align-items:center;gap:8px}
+.selected-file span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--accent)}
+
+/* Admin file list */
+.a-file-item{display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--bg);border-radius:8px;margin-bottom:.4rem;border:1px solid var(--border)}
+.a-file-item .a-fi-name{flex:1;font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.a-file-item .a-fi-cat{font-size:.72rem;color:var(--text2);background:var(--bg3);padding:2px 7px;border-radius:4px;flex-shrink:0}
+.del-btn{background:rgba(255,68,102,.12);border:1px solid rgba(255,68,102,.25);color:var(--red);border-radius:6px;padding:3px 9px;cursor:pointer;font-size:.74rem;font-weight:700;flex-shrink:0}
+.del-btn:hover{background:var(--red);color:#fff}
+
+/* Logo preview */
+.logo-preview-box{width:62px;height:62px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:2rem;border:1px solid var(--border);overflow:hidden}
+.logo-preview-box img{width:100%;height:100%;object-fit:cover}
+
+/* ====== TOAST ====== */
+#toast{position:fixed;bottom:2rem;right:2rem;z-index:99999;background:var(--bg2);border:1px solid var(--accent);color:var(--accent);padding:12px 20px;border-radius:10px;font-size:.87rem;font-weight:600;pointer-events:none;transform:translateX(120%);opacity:0;transition:all .3s;max-width:300px}
+#toast.show{transform:translateX(0);opacity:1}
+#toast.toast-err{border-color:var(--red);color:var(--red)}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:768px){
+  #navbar{padding:0 1rem}
+  .nav-links{display:none}
+  .page{padding:2rem 1rem}
+  #admin-sidebar{width:220px}
+  #admin-body{padding:1.2rem}
+}
+@media(max-width:480px){
+  #admin-overlay{flex-direction:column}
+  #admin-sidebar{width:100%;height:auto;max-height:40vh}
+  #admin-body{flex:1}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="page-loader">
+  <div class="spinner"></div>
+  <span id="loader-text">Loading DEV...</span>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-icon" id="logo-wrapper">
+      <span id="logo-icon" style="font-size:1.5rem">⚡</span>
+    </div>
+    <span id="nav-site-name">DEV</span>
+  </div>
+  <div class="nav-links" id="nav-links-main">
+    <a onclick="showPage('home')" id="nav-home" class="active" id="nl-home">HOME</a>
+    <a onclick="showPage('minecraft')" id="nl-minecraft">MINECRAFT</a>
+    <a onclick="showPage('discord')" id="nl-discord">DISCORD</a>
+    <a onclick="showPage('partner')" id="nl-partner">PARTNER</a>
+    <a onclick="showPage('promo')" id="nl-promo">PROMOTION</a>
+    <span id="custom-nav-links"></span>
+  </div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn btn-outline btn-sm" onclick="openAuth('login')">Login</button>
+    <button class="btn btn-primary btn-sm" onclick="openAuth('register')">Register</button>
+  </div>
+</nav>
+
+<!-- Announcement Bar -->
+<div id="announcement-bar"></div>
+
+<main>
+
+<!-- ===== CUSTOM PAGE (dynamic) ===== -->
+<div class="page" id="page-custom">
+  <div class="custom-page-content">
+    <h1 id="custom-page-title" style="margin-bottom:.5rem"></h1>
+    <div id="custom-page-body"></div>
+  </div>
+</div>
+
+<!-- ===== HOME ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">✦ FREE FOR EVERYONE</div>
+    <h1 id="hero-title">The Ultimate<br><span>Developer Hub</span></h1>
+    <p id="hero-desc">DEV is the ultimate free platform for developers and Minecraft server owners. Get setups, maps, plugins, skripts, configs, models and much more — completely free. Join our growing community!</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('minecraft')" style="padding:12px 28px;font-size:1rem">🎮 Explore Resources</button>
+      <button class="btn btn-outline" onclick="showPage('discord')" style="padding:12px 28px;font-size:1rem">💬 Join Discord</button>
+    </div>
+  </div>
+  <div class="features-grid" id="features-grid"></div>
+</div>
+
+<!-- ===== MINECRAFT ===== -->
+<div class="page" id="page-minecraft">
+  <div class="sec-title">🎮 <span>Minecraft</span> Resources</div>
+  <div class="sec-sub">Sabhi categories free hain. Download karein aur apna server level up karein.</div>
+  <div class="cat-tabs" id="mc-tabs">
+    <div class="cat-tab active" onclick="filterFiles('mc','all',this)">All</div>
+    <div class="cat-tab" onclick="filterFiles('mc','setup',this)">⚙️ Setup</div>
+    <div class="cat-tab" onclick="filterFiles('mc','maps',this)">🗺️ Maps</div>
+    <div class="cat-tab" onclick="filterFiles('mc','plugin',this)">🔌 Plugin</div>
+    <div class="cat-tab" onclick="filterFiles('mc','skript',this)">📜 Skript</div>
+    <div class="cat-tab" onclick="filterFiles('mc','config',this)">🛠️ Config</div>
+    <div class="cat-tab" onclick="filterFiles('mc','models',this)">🧊 Models</div>
+  </div>
+  <div class="files-grid" id="mc-files-grid">
+    <div class="empty-state"><span class="empty-icon">⏳</span><p>Loading...</p></div>
+  </div>
+</div>
+
+<!-- ===== DISCORD ===== -->
+<div class="page" id="page-discord">
+  <div class="discord-hero">
+    <div style="font-size:4rem;margin-bottom:1rem">💬</div>
+    <h2 id="dc-hero-title">Join Our Discord Server</h2>
+    <p id="dc-hero-desc">Hamare Discord server pe join karein. Latest updates, help, resources aur ek amazing community milegi!</p>
+    <a class="discord-join-btn" id="discord-btn" href="#" target="_blank" rel="noopener">
+      <svg width="24" height="24" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+      Join Server
+    </a>
+  </div>
+  <div class="sec-title" style="margin-bottom:.4rem">📁 <span>Discord</span> Files</div>
+  <div class="sec-sub">Discord se related sab resources yahan milenge.</div>
+  <div class="cat-tabs" id="dc-tabs">
+    <div class="cat-tab active" onclick="filterFiles('dc','all',this)">All</div>
+    <div class="cat-tab" onclick="filterFiles('dc','template',this)">📄 Template</div>
+    <div class="cat-tab" onclick="filterFiles('dc','others',this)">📦 Others</div>
+  </div>
+  <div class="files-grid" id="dc-files-grid">
+    <div class="empty-state"><span class="empty-icon">⏳</span><p>Loading...</p></div>
+  </div>
+</div>
+
+<!-- ===== PARTNER ===== -->
+<div class="page" id="page-partner">
+  <div class="sec-title">🤝 <span>Partners</span></div>
+  <div class="sec-sub">Hamare trusted partners ko meet karein. Unke Discord servers join karein aur Minecraft servers explore karein.</div>
+  <div class="partner-grid" id="partners-grid">
+    <div class="empty-state"><span class="empty-icon">⏳</span><p>Loading...</p></div>
+  </div>
+</div>
+
+<!-- ===== PROMO ===== -->
+<div class="page" id="page-promo">
+  <div class="sec-title">📣 <span>Promotion</span></div>
+  <div class="sec-sub">Hamare Minecraft server aur Discord server ko join karein!</div>
+
+  <div class="promo-sec">
+    <h2>🎮 Minecraft Server</h2>
+    <div class="status-card">
+      <h3 id="promo-mc-heading">IP: <span id="promo-mc-ip" style="color:var(--accent);font-size:1.1rem">Not set</span></h3>
+      <div class="status-row">
+        <div class="dot dot-gray" id="status-dot"></div>
+        <span id="status-text" style="color:var(--text2)">Admin panel mein IP set karein</span>
+      </div>
+      <div id="mc-extra" style="display:none">
+        <div class="players-bar"><div class="players-fill" id="players-fill" style="width:0%"></div></div>
+        <div class="players-text" id="players-text"></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="checkMCStatus()">🔄 Check Status</button>
+        <button class="btn btn-outline btn-sm" id="copy-mc-ip-btn" onclick="copyMCIP()" style="display:none">📋 Copy IP</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="promo-sec">
+    <h2>💬 Discord Server</h2>
+    <div class="status-card">
+      <p id="dc-promo-desc" style="color:var(--text2);margin-bottom:1.2rem;font-size:.92rem;line-height:1.6">Hamare Discord server pe 24/7 support milta hai!</p>
+      <a class="discord-join-btn" id="dc-promo-btn" href="#" target="_blank" rel="noopener" style="background:#5865f2;color:#fff;display:inline-flex">
+        <svg width="20" height="20" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+        Join Discord
+      </a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer id="site-footer" style="background:var(--bg2);border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:.82rem;color:var(--text2)">
+  <div id="footer-content">Made with ⚡ by <span style="color:var(--accent)">DEV</span></div>
+</footer>
+
+<!-- ===== AUTH MODAL ===== -->
+<div id="auth-modal">
+  <div class="auth-box">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <h2>Welcome to DEV</h2>
+    <p class="auth-sub">Free developer resources platform</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+    </div>
+    <div id="auth-alert"></div>
+
+    <div id="form-login">
+      <div class="form-group"><label>Username</label><input class="form-control" type="text" id="l-user" placeholder="Enter username" autocomplete="username"></div>
+      <div class="form-group"><label>Password</label><input class="form-control" type="password" id="l-pass" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn btn-primary" style="width:100%;padding:11px" id="login-btn" onclick="doLogin()">Login →</button>
+    </div>
+
+    <div id="form-register" style="display:none">
+      <div class="form-group"><label>Username</label><input class="form-control" type="text" id="r-user" placeholder="Choose username" autocomplete="username"></div>
+      <div class="form-group"><label>Email</label><input class="form-control" type="email" id="r-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="form-group"><label>Password</label><input class="form-control" type="password" id="r-pass" placeholder="Min 4 characters" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"></div>
+      <button class="btn btn-primary" style="width:100%;padding:11px" id="reg-btn" onclick="doRegister()">Create Account →</button>
+      <p style="font-size:.77rem;color:var(--text2);text-align:center;margin-top:.8rem">⚡ Pehla registered user Admin ban jaata hai!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div id="admin-overlay">
+  <div id="admin-sidebar">
+    <div class="admin-hdr">
+      <h2 id="admin-panel-title">⚙️ Admin Panel</h2>
+      <button class="admin-close-btn" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-nav">
+      <div class="a-nav-item admin-only active" onclick="aSection('branding',this)"><span class="a-nav-icon">🎨</span>Branding & Logo</div>
+      <div class="a-nav-item admin-only" onclick="aSection('theme',this)"><span class="a-nav-icon">🌈</span>Theme & Colors</div>
+      <div class="a-nav-item admin-only" onclick="aSection('home-edit',this)"><span class="a-nav-icon">🏠</span>Home Page</div>
+      <div class="a-nav-item" onclick="aSection('mc-files',this)"><span class="a-nav-icon">🎮</span>Minecraft Files</div>
+      <div class="a-nav-item" onclick="aSection('dc-files',this)"><span class="a-nav-icon">💬</span>Discord Files</div>
+      <div class="a-nav-item admin-only" onclick="aSection('partners-a',this)"><span class="a-nav-icon">🤝</span>Partners</div>
+      <div class="a-nav-item admin-only" onclick="aSection('promo-a',this)"><span class="a-nav-icon">📣</span>Promotion</div>
+      <div class="a-nav-item admin-only" onclick="aSection('nav-a',this)"><span class="a-nav-icon">🔗</span>Navigation</div>
+      <div class="a-nav-item admin-only" onclick="aSection('users-a',this)"><span class="a-nav-icon">👥</span>Users</div>
+      <div class="a-nav-divider">── Content ──</div>
+      <div class="a-nav-item admin-only" onclick="aSection('pages-a',this)"><span class="a-nav-icon">📄</span>Pages</div>
+      <div class="a-nav-item" onclick="aSection('cats-a',this)"><span class="a-nav-icon">🏷️</span>Categories</div>
+      <div class="a-nav-item" onclick="aSection('announce-a',this)"><span class="a-nav-icon">📢</span>Announcements</div>
+      <div class="a-nav-divider">── System ──</div>
+      <div class="a-nav-item" onclick="aSection('seo-a',this)"><span class="a-nav-icon">🔍</span>SEO Settings</div>
+      <div class="a-nav-item" onclick="aSection('footer-a',this)"><span class="a-nav-icon">📝</span>Footer</div>
+      <div class="a-nav-item" onclick="aSection('stats-a',this)"><span class="a-nav-icon">📊</span>Statistics</div>
+      <div class="a-nav-item" onclick="aSection('maintenance-a',this)"><span class="a-nav-icon">🔧</span>Maintenance</div>
+      <div class="a-nav-item admin-only" onclick="aSection('update-a',this)"><span class="a-nav-icon">📦</span>Website Update</div>
+    </div>
+  </div>
+
+  <div id="admin-body">
+
+    <!-- BRANDING -->
+    <div class="a-section active" id="as-branding">
+      <h3>🎨 Branding & Logo</h3>
+      <div class="a-card">
+        <h4>Site Name & Small Icon</h4>
+        <div class="form-group"><label>Site Name</label><input class="form-control" id="a-sitename" placeholder="DEV"></div>
+        <div class="form-group">
+          <label>Small Icon (Emoji)</label>
+          <input class="form-control" id="a-smallicon" placeholder="⚡" style="font-size:1.3rem">
+          <div class="form-hint">Browser tab aur navbar ke liye emoji use karein (e.g. ⚡🎮💻🔥)</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveSetting2('site_name','a-sitename');saveSetting2('small_icon','a-smallicon');applyBranding()">💾 Save</button>
+      </div>
+      <div class="a-card">
+        <h4>Logo Image URL <span class="hint">(replaces emoji icon in navbar)</span></h4>
+        <div class="form-group"><label>Image URL</label><input class="form-control" id="a-logo-url" placeholder="https://i.imgur.com/your-logo.png" oninput="updateLogoPreview()"></div>
+        <div class="form-group"><label>Preview</label><div class="logo-preview-box" id="logo-preview-box"><span id="logo-prev-icon" style="font-size:2rem">⚡</span></div></div>
+        <button class="btn btn-primary btn-sm" onclick="saveSetting2('logo_url','a-logo-url');applyBranding()">💾 Apply Logo</button>
+      </div>
+      <div class="a-card">
+        <h4>Favicon URL <span class="hint">(browser tab icon — 32x32 .ico or .png)</span></h4>
+        <div class="form-group"><input class="form-control" id="a-favicon-url" placeholder="https://example.com/favicon.ico"></div>
+        <button class="btn btn-primary btn-sm" onclick="saveSetting2('favicon_url','a-favicon-url');applyFavicon()">💾 Apply Favicon</button>
+      </div>
+    </div>
+
+    <!-- THEME -->
+    <div class="a-section" id="as-theme">
+      <h3>🌈 Theme & Colors</h3>
+      <div class="a-card">
+        <h4>Color Palette</h4>
+        <div class="color-grid">
+          <div class="form-group"><label>Accent / Primary</label><div class="color-row"><input type="color" id="c-accent" value="#00ff88" oninput="liveColor('--accent',this.value);document.getElementById('c-accent-hex').value=this.value"><input class="form-control" id="c-accent-hex" value="#00ff88" style="font-family:monospace" oninput="liveColor('--accent',this.value);document.getElementById('c-accent').value=this.value"></div></div>
+          <div class="form-group"><label>Secondary / Purple</label><div class="color-row"><input type="color" id="c-accent2" value="#7c3aed" oninput="liveColor('--accent2',this.value);document.getElementById('c-accent2-hex').value=this.value"><input class="form-control" id="c-accent2-hex" value="#7c3aed" style="font-family:monospace" oninput="liveColor('--accent2',this.value);document.getElementById('c-accent2').value=this.value"></div></div>
+          <div class="form-group"><label>Background</label><div class="color-row"><input type="color" id="c-bg" value="#0a0a0f" oninput="liveColor('--bg',this.value);document.getElementById('c-bg-hex').value=this.value"><input class="form-control" id="c-bg-hex" value="#0a0a0f" style="font-family:monospace" oninput="liveColor('--bg',this.value);document.getElementById('c-bg').value=this.value"></div></div>
+          <div class="form-group"><label>Text Color</label><div class="color-row"><input type="color" id="c-text" value="#e8e8f0" oninput="liveColor('--text',this.value);document.getElementById('c-text-hex').value=this.value"><input class="form-control" id="c-text-hex" value="#e8e8f0" style="font-family:monospace" oninput="liveColor('--text',this.value);document.getElementById('c-text').value=this.value"></div></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveTheme()">💾 Save Theme</button>
+        <button class="btn btn-outline btn-sm" onclick="resetTheme()" style="margin-left:8px">↩ Reset Default</button>
+      </div>
+    </div>
+
+    <!-- HOME EDIT -->
+    <div class="a-section" id="as-home-edit">
+      <h3>🏠 Home Page</h3>
+      <div class="a-card">
+        <h4>Hero Section</h4>
+        <div class="form-group"><label>Main Title</label><input class="form-control" id="a-hero-title" placeholder="The Ultimate Developer Hub"></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="a-hero-desc" style="min-height:100px"></textarea></div>
+        <button class="btn btn-primary btn-sm" onclick="saveHomePage()">💾 Save Hero</button>
+      </div>
+      <div class="a-card">
+        <h4>Feature Cards (4)</h4>
+        <div id="feature-cards-admin"></div>
+        <button class="btn btn-primary btn-sm" onclick="saveFeatureCards()">💾 Save Cards</button>
+      </div>
+    </div>
+
+    <!-- MC FILES -->
+    <div class="a-section" id="as-mc-files">
+      <h3>🎮 Minecraft Files</h3>
+      <div class="a-card">
+        <h4>Upload / Add File</h4>
+        <div class="form-group"><label>Category</label>
+          <select class="form-control" id="mc-cat">
+            <option value="setup">⚙️ Setup</option><option value="maps">🗺️ Maps</option>
+            <option value="plugin">🔌 Plugin</option><option value="skript">📜 Skript</option>
+            <option value="config">🛠️ Config</option><option value="models">🧊 Models</option>
+          </select>
+        </div>
+        <div class="form-group"><label>File Name</label><input class="form-control" id="mc-fname" placeholder="e.g. Epic Lobby Setup v2"></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="mc-fdesc" placeholder="File ke bare mein..." style="min-height:65px"></textarea></div>
+        <div class="form-group">
+          <label>Upload File (drag & drop)</label>
+          <div class="upload-zone" id="mc-drop-zone">
+            <span class="uz-icon">📁</span>
+            <p>File yahan drag karein ya click karein</p>
+            <input type="file" id="mc-file-input" onchange="onFileSelected('mc',this)">
+          </div>
+          <div class="selected-file" id="mc-selected-file"><span id="mc-sf-name"></span><button class="del-btn" onclick="clearFile('mc')">✕</button></div>
+          <div class="upload-progress" id="mc-progress"><div class="upload-progress-fill" id="mc-progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="form-group"><label>— OR — External Download Link</label><input class="form-control" id="mc-flink" placeholder="https://drive.google.com/..."></div>
+        <button class="btn btn-primary btn-sm" id="mc-add-btn" onclick="addFile('mc')">➕ Add File</button>
+      </div>
+      <div class="a-card">
+        <h4>Existing Minecraft Files</h4>
+        <div id="mc-admin-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- DC FILES -->
+    <div class="a-section" id="as-dc-files">
+      <h3>💬 Discord Files</h3>
+      <div class="a-card">
+        <h4>Discord Server Link</h4>
+        <div class="form-group"><input class="form-control" id="a-discord-link" placeholder="https://discord.gg/invite-code"></div>
+        <button class="btn btn-primary btn-sm" onclick="saveSetting2('discord_link','a-discord-link');applyDiscordLinks()">💾 Save Link</button>
+      </div>
+      <div class="a-card">
+        <h4>Upload / Add File</h4>
+        <div class="form-group"><label>Category</label>
+          <select class="form-control" id="dc-cat">
+            <option value="template">📄 Template</option><option value="others">📦 Others</option>
+          </select>
+        </div>
+        <div class="form-group"><label>File Name</label><input class="form-control" id="dc-fname" placeholder="e.g. Discord Bot Config"></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="dc-fdesc" placeholder="File ke bare mein..." style="min-height:65px"></textarea></div>
+        <div class="form-group">
+          <label>Upload File</label>
+          <div class="upload-zone" id="dc-drop-zone">
+            <span class="uz-icon">📁</span>
+            <p>File yahan drag karein ya click karein</p>
+            <input type="file" id="dc-file-input" onchange="onFileSelected('dc',this)">
+          </div>
+          <div class="selected-file" id="dc-selected-file"><span id="dc-sf-name"></span><button class="del-btn" onclick="clearFile('dc')">✕</button></div>
+          <div class="upload-progress" id="dc-progress"><div class="upload-progress-fill" id="dc-progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="form-group"><label>— OR — External Link</label><input class="form-control" id="dc-flink" placeholder="https://..."></div>
+        <button class="btn btn-primary btn-sm" id="dc-add-btn" onclick="addFile('dc')">➕ Add File</button>
+      </div>
+      <div class="a-card">
+        <h4>Existing Discord Files</h4>
+        <div id="dc-admin-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="a-section" id="as-partners-a">
+      <h3>🤝 Partners</h3>
+      <div class="a-card">
+        <h4>Add New Partner</h4>
+        <div class="form-group"><label>Name *</label><input class="form-control" id="p-name" placeholder="Server / Partner Name"></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="p-desc" placeholder="Partner ke bare mein..." style="min-height:70px"></textarea></div>
+        <div class="form-group"><label>Minecraft Server IP</label><input class="form-control" id="p-ip" placeholder="play.example.com"></div>
+        <div class="form-group"><label>Discord Invite Link</label><input class="form-control" id="p-dc" placeholder="https://discord.gg/..."></div>
+        <div class="form-group"><label>Banner/Logo Image URL</label><input class="form-control" id="p-img" placeholder="https://i.imgur.com/banner.png"></div>
+        <div class="form-group"><label>Tags (comma separated)</label><input class="form-control" id="p-tags" placeholder="SMP, Survival, Java, 1.20"></div>
+        <button class="btn btn-primary btn-sm" id="p-add-btn" onclick="addPartner()">➕ Add Partner</button>
+      </div>
+      <div class="a-card">
+        <h4>Existing Partners</h4>
+        <div id="p-admin-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- PROMO -->
+    <div class="a-section" id="as-promo-a">
+      <h3>📣 Promotion Settings</h3>
+      <div class="a-card">
+        <h4>Minecraft Server</h4>
+        <div class="form-group"><label>Server IP</label><input class="form-control" id="a-mc-ip" placeholder="play.yourserver.com"></div>
+        <div class="form-group"><label>Server Display Name</label><input class="form-control" id="a-mc-name" placeholder="My Awesome Server"></div>
+        <button class="btn btn-primary btn-sm" onclick="savePromoMC()">💾 Save & Check Status</button>
+      </div>
+      <div class="a-card">
+        <h4>Discord Promo</h4>
+        <div class="form-group"><label>Discord Link</label><input class="form-control" id="a-dc-promo-link" placeholder="https://discord.gg/..."></div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" id="a-dc-promo-desc" placeholder="Discord server ke bare mein..." style="min-height:70px"></textarea></div>
+        <button class="btn btn-primary btn-sm" onclick="savePromoDC()">💾 Save Discord Promo</button>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="a-section" id="as-nav-a">
+      <h3>🔗 Navigation Labels</h3>
+      <div class="a-card">
+        <div class="form-group"><label>Home Label</label><input class="form-control" id="nl-home-a" value="HOME"></div>
+        <div class="form-group"><label>Minecraft Label</label><input class="form-control" id="nl-mc-a" value="MINECRAFT"></div>
+        <div class="form-group"><label>Discord Label</label><input class="form-control" id="nl-dc-a" value="DISCORD"></div>
+        <div class="form-group"><label>Partner Label</label><input class="form-control" id="nl-part-a" value="PARTNER"></div>
+        <div class="form-group"><label>Promotion Label</label><input class="form-control" id="nl-promo-a" value="PROMOTION"></div>
+        <button class="btn btn-primary btn-sm" onclick="saveNavLabels()">💾 Save Labels</button>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="a-section" id="as-users-a">
+      <h3>👥 User Management</h3>
+      <div id="users-admin-list"><p style="color:var(--text2)">Loading...</p></div>
+    </div>
+
+    <!-- PAGES -->
+    <div class="a-section" id="as-pages-a">
+      <h3>📄 Pages Manager</h3>
+      <div class="a-card">
+        <h4>➕ New Page Create Karein</h4>
+        <div class="form-group"><label>Page Title *</label><input class="form-control" id="pg-title" placeholder="e.g. Rules, Tutorial, About Us" oninput="autoSlug()"></div>
+        <div class="form-group"><label>URL Slug *</label><div style="display:flex;gap:8px;align-items:center"><span style="color:var(--text2);font-size:.85rem">/</span><input class="form-control" id="pg-slug" placeholder="rules" style="font-family:monospace"></div><div class="form-hint">URL mein kaise dikhega: yoursite.com/#rules</div></div>
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:8px">
+          <div class="form-group"><label>Icon</label><input class="form-control" id="pg-icon" placeholder="📄" value="📄" style="font-size:1.2rem;text-align:center"></div>
+          <div class="form-group"><label>Navigation Label</label><input class="form-control" id="pg-navlabel" placeholder="RULES"></div>
+        </div>
+        <div class="form-group">
+          <label>Page Content <span class="hint">(HTML supported)</span></label>
+          <textarea class="form-control" id="pg-content" style="min-height:160px;font-family:monospace;font-size:.82rem" placeholder="&lt;h2&gt;Welcome&lt;/h2&gt;&#10;&lt;p&gt;Yahan apna content likho...&lt;/p&gt;"></textarea>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="pg-shownav" checked style="width:16px;height:16px;cursor:pointer">
+          <label for="pg-shownav" style="margin:0;cursor:pointer">Navigation mein dikhao</label>
+        </div>
+        <button class="btn btn-primary btn-sm" id="pg-add-btn" onclick="addPage()">➕ Create Page</button>
+      </div>
+      <div class="a-card">
+        <h4>Existing Pages</h4>
+        <div id="pages-admin-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="a-section" id="as-cats-a">
+      <h3>🏷️ Categories Manager</h3>
+      <div class="a-card">
+        <h4>➕ New Category Add Karein</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="form-group">
+            <label>Type *</label>
+            <select class="form-control" id="cat-type">
+              <option value="mc">🎮 Minecraft</option>
+              <option value="dc">💬 Discord</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Icon</label><input class="form-control" id="cat-icon" placeholder="📁" value="📁" style="font-size:1.2rem;text-align:center"></div>
+        </div>
+        <div class="form-group"><label>Category Label *</label><input class="form-control" id="cat-label" placeholder="e.g. Resource Pack" oninput="autoCatSlug()"></div>
+        <div class="form-group"><label>Slug *</label><input class="form-control" id="cat-slug" placeholder="resource-pack" style="font-family:monospace"><div class="form-hint">Lowercase, no spaces (use underscore)</div></div>
+        <button class="btn btn-primary btn-sm" id="cat-add-btn" onclick="addCategory()">➕ Add Category</button>
+        <div class="form-group" style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem">
+            <input type="checkbox" id="cat-private" style="width:16px;height:16px;cursor:pointer">
+            🔒 <span>Private Category <small style="color:var(--text2)">(sirf Staff/Admin/Owner dekh sakenge)</small></span>
+          </label>
+        </div>
+      </div>
+      <div class="a-card">
+        <h4>🎮 Minecraft Categories</h4>
+        <div id="mc-cats-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+      <div class="a-card">
+        <h4>💬 Discord Categories</h4>
+        <div id="dc-cats-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENTS -->
+    <div class="a-section" id="as-announce-a">
+      <h3>📢 Announcements</h3>
+      <div class="a-card">
+        <h4>➕ New Announcement</h4>
+        <div class="form-group"><label>Message *</label><textarea class="form-control" id="ann-msg" style="min-height:80px" placeholder="Important update ya announcement likho..."></textarea></div>
+        <div class="form-group">
+          <label>Type</label>
+          <select class="form-control" id="ann-type">
+            <option value="info">ℹ️ Info (Blue)</option>
+            <option value="success">✅ Success (Green)</option>
+            <option value="warning">⚠️ Warning (Yellow)</option>
+            <option value="error">🔴 Error (Red)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" id="ann-add-btn" onclick="addAnnouncement()">📢 Post Announcement</button>
+      </div>
+      <div class="a-card">
+        <h4>All Announcements</h4>
+        <div id="ann-admin-list"><p style="color:var(--text2);font-size:.85rem">Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="a-section" id="as-seo-a">
+      <h3>🔍 SEO Settings</h3>
+      <div class="a-card">
+        <h4>Meta Tags</h4>
+        <div class="form-group"><label>Meta Description</label><textarea class="form-control" id="a-seo-desc" style="min-height:90px" placeholder="Site ka short description for search engines..."></textarea><div class="form-hint">160 characters tak rakhein</div></div>
+        <div class="form-group"><label>Keywords</label><input class="form-control" id="a-seo-kw" placeholder="minecraft, free, setup, plugin, skript"><div class="form-hint">Comma separated keywords</div></div>
+        <button class="btn btn-primary btn-sm" onclick="saveSEO()">💾 Save SEO</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="a-section" id="as-footer-a">
+      <h3>📝 Footer Settings</h3>
+      <div class="a-card">
+        <h4>Footer Text</h4>
+        <div class="form-group"><textarea class="form-control" id="a-footer-text" style="min-height:100px" placeholder="Footer mein kya dikhana hai... HTML supported"></textarea></div>
+        <button class="btn btn-primary btn-sm" onclick="saveFooter()">💾 Save Footer</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="a-section" id="as-stats-a">
+      <h3>📊 Site Statistics</h3>
+      <div id="stats-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem">
+        <p style="color:var(--text2)">Loading...</p>
+      </div>
+    </div>
+
+    <!-- MAINTENANCE -->
+    <div class="a-section" id="as-maintenance-a">
+      <h3>🔧 Maintenance Mode</h3>
+      <div class="a-card">
+        <h4>Maintenance Toggle</h4>
+        <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem">Maintenance mode on karne se normal users ko maintenance page dikhega. Admins normally access kar sakte hain.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+          <span style="font-size:.9rem">Maintenance Mode:</span>
+          <button id="maint-toggle-btn" class="btn btn-outline btn-sm" onclick="toggleMaintenance()">Loading...</button>
+        </div>
+        <div class="form-group"><label>Maintenance Message</label><textarea class="form-control" id="a-maint-msg" style="min-height:80px" placeholder="Site currently under maintenance..."></textarea></div>
+        <button class="btn btn-primary btn-sm" onclick="saveMaintenance()">💾 Save</button>
+      </div>
+    </div>
+
+
+    <div class="a-section" id="as-update-a">
+      <h3>📦 Website Update</h3>
+      <div class="a-card">
+        <h4>Upload Update ZIP</h4>
+        <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.5">
+          Naya project <b>.zip</b> upload karein. Sirf code update hoga.
+          Aapka <b>database, uploads aur settings</b> safe rahenge. Update se pehle automatic backup banega.
+        </p>
+        <div id="upd-info" style="font-size:.82rem;color:var(--text2);margin-bottom:12px">Loading...</div>
+        <input type="file" id="upd-file" accept=".zip,application/zip" style="margin-bottom:12px;max-width:100%" />
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" id="upd-check-btn" onclick="updCheck()">🔍 Check ZIP</button>
+          <button class="btn btn-outline btn-sm" id="upd-apply-btn" onclick="updApply()" style="display:none">✅ Apply Update</button>
+        </div>
+        <div id="upd-msg" style="margin-top:12px;font-size:.88rem"></div>
+        <div id="upd-preview" style="margin-top:14px;display:none">
+          <h4 style="margin-bottom:8px">Preview</h4>
+          <pre id="upd-preview-body" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.78rem;max-height:260px;overflow:auto;white-space:pre-wrap"></pre>
+        </div>
+      </div>
+      <div class="a-card" style="margin-top:1rem">
+        <h4>Update History</h4>
+        <div id="upd-history" style="font-size:.85rem;color:var(--text2)">—</div>
+      </div>
+    </div>
+
+  </div><!-- /admin-body -->
+</div><!-- /admin-overlay -->
+
+<script>
+// ================================================================
+// CONFIG — API endpoint
+// ================================================================
+const API = '/api';
+
+// ================================================================
+// STATE
+// ================================================================
+let S = {}; // settings cache
+let currentUser = null;
+let selectedFiles = { mc: null, dc: null };
+
+// ================================================================
+// INIT
+// ================================================================
+async function init() {
+  setLoaderText('Loading settings...');
+  await loadSettings();
+  applyAllSettings();
+  setLoaderText('Loading content...');
+  await Promise.all([loadCategoriesInfo(), loadCustomPages(), loadAnnouncements()]);
+  await Promise.all([loadFiles('mc'), loadFiles('dc'), loadPartners()]);
+  await checkSession();
+  hideLoader();
+}
+
+function setLoaderText(t) { document.getElementById('loader-text').textContent = t; }
+function hideLoader() {
+  const l = document.getElementById('page-loader');
+  l.classList.add('hide');
+  setTimeout(() => l.style.display = 'none', 450);
+}
+
+// ================================================================
+// API CALL HELPER
+// ================================================================
+async function api(params, method = 'GET') {
+  try {
+    let res;
+    if (method === 'GET') {
+      const qs = new URLSearchParams(params).toString();
+      res = await fetch(API + '?' + qs, { credentials: 'include' });
+    } else {
+      const fd = params instanceof FormData ? params : (() => { const f = new FormData(); Object.entries(params).forEach(([k,v]) => f.append(k,v)); return f; })();
+      res = await fetch(API, { method: 'POST', body: fd, credentials: 'include' });
+    }
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch(e) {
+      console.error('API non-JSON response:', text);
+      return { error: 'Server error (invalid JSON). Console dekho.' };
+    }
+  } catch(e) { return { error: e.message }; }
+}
+
+// ================================================================
+// SETTINGS
+// ================================================================
+async function loadSettings() {
+  const data = await api({ action: 'get_settings' });
+  if (!data.error) S = data;
+}
+
+function getSetting(key, def = '') { return S[key] !== undefined ? S[key] : def; }
+
+async function saveSetting(key, value) {
+  S[key] = value;
+  await api({ action: 'save_setting', key, value }, 'POST');
+}
+
+async function saveSetting2(key, inputId) {
+  const val = document.getElementById(inputId)?.value ?? '';
+  await saveSetting(key, val);
+}
+
+function applyAllSettings() {
+  applyBranding();
+  applyTheme();
+  applyNavLabels();
+  applyHeroContent();
+  applyDiscordLinks();
+  applyPromoContent();
+  renderFeatureCards();
+  applySEO();
+  applyFooter();
+  applyMaintenanceUI();
+}
+
+function applyBranding() {
+  const siteName = getSetting('site_name', 'DEV');
+  const icon     = getSetting('small_icon', '⚡');
+  const logoUrl  = getSetting('logo_url', '');
+  const favicon  = getSetting('favicon_url', '');
+
+  document.getElementById('nav-site-name').textContent = siteName;
+  document.title = siteName + ' - Free Developer Resources';
+
+  const wrapper = document.getElementById('logo-wrapper');
+  if (logoUrl) {
+    wrapper.innerHTML = `<img src="${logoUrl}" style="width:36px;height:36px;border-radius:8px;object-fit:cover" onerror="this.outerHTML='<span id=\\'logo-icon\\' style=\\'font-size:1.5rem\\'>${icon}</span>'">`;
+  } else {
+    wrapper.innerHTML = `<span id="logo-icon" style="font-size:1.5rem">${icon}</span>`;
+  }
+  applyFavicon();
+}
+
+function applyFavicon() {
+  const fav = getSetting('favicon_url', '');
+  const icon = getSetting('small_icon', '⚡');
+  const favEl = document.getElementById('favicon-icon');
+  if (fav) { favEl.href = fav; }
+  else { favEl.href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${encodeURIComponent(icon)}</text></svg>`; }
+}
+
+function applyTheme() {
+  const r = document.documentElement;
+  r.style.setProperty('--accent',  getSetting('color_accent',  '#00ff88'));
+  r.style.setProperty('--accent2', getSetting('color_accent2', '#7c3aed'));
+  r.style.setProperty('--bg',      getSetting('color_bg',      '#0a0a0f'));
+  r.style.setProperty('--text',    getSetting('color_text',    '#e8e8f0'));
+}
+
+function applyNavLabels() {
+  const map = { nav_home:'nl-home', nav_minecraft:'nl-minecraft', nav_discord:'nl-discord', nav_partner:'nl-partner', nav_promo:'nl-promo' };
+  Object.entries(map).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = getSetting(key, el.textContent);
+  });
+}
+
+function applyHeroContent() {
+  const ht = getSetting('hero_title', 'The Ultimate Developer Hub');
+  document.getElementById('hero-title').innerHTML = ht.includes('<') ? ht : `${ht.split(' ').slice(0,-2).join(' ')}<br><span>${ht.split(' ').slice(-2).join(' ')}</span>`;
+  document.getElementById('hero-desc').textContent = getSetting('hero_desc', '');
+  document.getElementById('dc-hero-title').textContent = getSetting('discord_hero_title', 'Join Our Discord Server');
+  document.getElementById('dc-hero-desc').textContent  = getSetting('discord_hero_desc', '');
+}
+
+function applyDiscordLinks() {
+  const link = getSetting('discord_link', '#');
+  document.getElementById('discord-btn').href = link || '#';
+  document.getElementById('dc-promo-btn').href = getSetting('promo_dc_link', link) || '#';
+}
+
+function applyPromoContent() {
+  const ip   = getSetting('promo_mc_ip', '');
+  const name = getSetting('promo_mc_name', '');
+  document.getElementById('promo-mc-ip').textContent = ip || 'Not set';
+  if (name) document.getElementById('promo-mc-heading').innerHTML = `Server: <span style="color:var(--accent)">${esc(name)}</span><br><small style="font-size:.8rem;opacity:.8">IP: <span id="promo-mc-ip" style="color:var(--accent)">${esc(ip)}</span></small>`;
+  if (ip) { document.getElementById('copy-mc-ip-btn').style.display = 'inline-flex'; checkMCStatus(); }
+  const dcDesc = getSetting('promo_dc_desc', '');
+  if (dcDesc) document.getElementById('dc-promo-desc').textContent = dcDesc;
+}
+
+// ================================================================
+// FILES
+// ================================================================
+// Dynamic category info (loaded from DB)
+let catInfo = {
+  setup:    { icon:'⚙️', label:'Setup' },
+  maps:     { icon:'🗺️', label:'Maps'  },
+  plugin:   { icon:'🔌', label:'Plugin' },
+  skript:   { icon:'📜', label:'Skript' },
+  config:   { icon:'🛠️', label:'Config' },
+  models:   { icon:'🧊', label:'Models' },
+  template: { icon:'📄', label:'Template' },
+  others:   { icon:'📦', label:'Others' },
+};
+
+async function loadCategoriesInfo() {
+  const data = await api({ action: 'get_categories' });
+  if (!data.error && Array.isArray(data)) {
+    data.forEach(c => { catInfo[c.slug] = { icon: c.icon, label: c.label }; });
+    rebuildCategoryTabs();
+  }
+}
+
+function rebuildCategoryTabs() {
+  // MC tabs
+  const mcCats = Object.entries(catInfo).filter(([k]) =>
+    ['setup','maps','plugin','skript','config','models'].includes(k) ||
+    !['template','others'].includes(k)
+  );
+  // Rebuild is handled by server-loaded categories
+}
+
+
+async function loadFiles(type, cat = 'all') {
+  const gridId = type === 'mc' ? 'mc-files-grid' : 'dc-files-grid';
+  document.getElementById(gridId).innerHTML = `<div class="empty-state"><span class="empty-icon" style="animation:spin 1s linear infinite">⏳</span><p>Loading...</p></div>`;
+  const data = await api({ action: `get_${type}_files`, category: cat });
+  renderFilesGrid(gridId, data, type);
+  if (type === 'mc') renderAdminFileList('mc', data);
+  else renderAdminFileList('dc', data);
+}
+
+function renderFilesGrid(gridId, files, type) {
+  const grid = document.getElementById(gridId);
+  if (!files || files.error || !files.length) {
+    grid.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><p>Koi file nahi hai abhi.<br><small>Admin panel se upload karein.</small></p></div>`;
+    return;
+  }
+  grid.innerHTML = files.map(f => {
+    const ci = catInfo[f.category] || { icon:'📁', label:f.category };
+    const dlHref = `/download?type=${type}&id=${f.id}`;
+    return `<div class="file-card">
+      <div class="file-cat-icon">${ci.icon}</div>
+      <div class="file-name" title="${esc(f.name)}">${esc(f.name)}</div>
+      <div class="file-desc">${esc(f.description || 'No description')}</div>
+      <div class="file-meta">
+        <span>${ci.icon} ${ci.label}</span>
+        ${f.filesize ? `<span class="file-size-badge">${esc(f.filesize)}</span>` : ''}
+      </div>
+      <a class="dl-btn" href="${dlHref}" ${f.link&&!f.filename?`href="${esc(f.link)}" target="_blank" rel="noopener"`:''}>⬇️ Download</a>
+    </div>`;
+  }).join('');
+}
+
+function renderAdminFileList(type, files) {
+  const el = document.getElementById(`${type}-admin-list`);
+  if (!files || files.error || !files.length) { el.innerHTML = '<p style="color:var(--text2);font-size:.85rem">Koi file nahi</p>'; return; }
+  el.innerHTML = files.map(f => {
+    const ci = catInfo[f.category] || { icon:'📁', label:f.category };
+    return `<div class="a-file-item">
+      <span>${ci.icon}</span>
+      <span class="a-fi-name">${esc(f.name)}</span>
+      <span class="a-fi-cat">${ci.label}</span>
+      <button class="del-btn" onclick="deleteFile('${type}',${f.id})">✕ Delete</button>
+    </div>`;
+  }).join('');
+}
+
+function filterFiles(type, cat, el) {
+  const tabsId = type === 'mc' ? 'mc-tabs' : 'dc-tabs';
+  document.querySelectorAll(`#${tabsId} .cat-tab`).forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  loadFiles(type, cat);
+}
+
+// ================================================================
+// ADD FILE (with real upload)
+// ================================================================
+async function addFile(type) {
+  const cat  = document.getElementById(`${type}-cat`).value;
+  const name = document.getElementById(`${type}-fname`).value.trim();
+  const desc = document.getElementById(`${type}-fdesc`).value.trim();
+  const link = document.getElementById(`${type}-flink`).value.trim();
+  const file = selectedFiles[type];
+
+  if (!name) return toast('File name required!', true);
+  if (!file && !link) return toast('File upload karein ya link dein!', true);
+
+  setBtnLoad(`${type}-add-btn`, true);
+  showProgress(type, 0);
+
+  const fd = new FormData();
+  fd.append('action', `add_${type}_file`);
+  fd.append('category', cat);
+  fd.append('name', name);
+  fd.append('description', desc);
+  fd.append('link', link);
+  if (file) fd.append('file', file);
+
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API);
+    xhr.upload.onprogress = (e) => { if (e.lengthComputable) showProgress(type, Math.round(e.loaded/e.total*100)); };
+    const result = await new Promise((res, rej) => {
+      xhr.onload = () => {
+        try {
+          res(JSON.parse(xhr.responseText));
+        } catch(e) {
+          // Server ne JSON nahi bheja (shayad PHP error/HTML)
+          console.error('Server response:', xhr.responseText);
+          rej(new Error('Server error: Invalid response. Check console.'));
+        }
+      };
+      xhr.onerror = () => rej(new Error('Upload failed'));
+      xhr.send(fd);
+    });
+
+    if (result.error) { toast(result.error, true); }
+    else {
+      toast(`✅ File added!`);
+      document.getElementById(`${type}-fname`).value = '';
+      document.getElementById(`${type}-fdesc`).value = '';
+      document.getElementById(`${type}-flink`).value = '';
+      clearFile(type);
+      await loadFiles(type);
+    }
+  } catch(e) { toast(e.message, true); }
+
+  hideProgress(type);
+  setBtnLoad(`${type}-add-btn`, false);
+}
+
+async function deleteFile(type, id) {
+  if (!confirm('Is file ko delete karein?')) return;
+  const result = await api({ action: `delete_${type}_file`, id }, 'POST');
+  if (result.error) toast(result.error, true);
+  else { toast('🗑️ Deleted!'); await loadFiles(type); }
+}
+
+// Upload UI helpers
+function onFileSelected(type, input) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedFiles[type] = file;
+  document.getElementById(`${type}-sf-name`).textContent = file.name;
+  document.getElementById(`${type}-selected-file`).style.display = 'flex';
+  if (!document.getElementById(`${type}-fname`).value) document.getElementById(`${type}-fname`).value = file.name.replace(/\.[^.]+$/,'');
+}
+function clearFile(type) {
+  selectedFiles[type] = null;
+  document.getElementById(`${type}-file-input`).value = '';
+  document.getElementById(`${type}-selected-file`).style.display = 'none';
+  document.getElementById(`${type}-sf-name`).textContent = '';
+}
+function showProgress(type, pct) {
+  document.getElementById(`${type}-progress`).style.display = 'block';
+  document.getElementById(`${type}-progress-fill`).style.width = pct + '%';
+}
+function hideProgress(type) { document.getElementById(`${type}-progress`).style.display = 'none'; }
+
+// Drag & drop
+['mc','dc'].forEach(type => {
+  const zone = document.getElementById(`${type}-drop-zone`);
+  if (!zone) return;
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file) { selectedFiles[type] = file; document.getElementById(`${type}-sf-name`).textContent = file.name; document.getElementById(`${type}-selected-file`).style.display = 'flex'; if (!document.getElementById(`${type}-fname`).value) document.getElementById(`${type}-fname`).value = file.name.replace(/\.[^.]+$/,''); }
+  });
+});
+
+// ================================================================
+// PARTNERS
+// ================================================================
+async function loadPartners() {
+  const data = await api({ action: 'get_partners' });
+  renderPartners(data);
+  renderAdminPartners(data);
+}
+
+function renderPartners(partners) {
+  const grid = document.getElementById('partners-grid');
+  if (!partners || partners.error || !partners.length) {
+    grid.innerHTML = `<div class="empty-state"><span class="empty-icon">🤝</span><p>Koi partner nahi hai abhi.<br><small>Admin panel se add karein.</small></p></div>`;
+    return;
+  }
+  grid.innerHTML = partners.map(p => {
+    const tags = (p.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+    return `<div class="partner-card">
+      <div class="p-banner">${p.banner_img ? `<img src="${esc(p.banner_img)}" alt="${esc(p.name)}" onerror="this.parentElement.innerHTML='🎮'">` : '🎮'}</div>
+      <div class="p-body">
+        <h3>${esc(p.name)}</h3>
+        <div class="p-desc">${esc(p.description || '')}</div>
+        ${tags.length ? `<div class="p-tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${p.mc_ip ? `<div class="mc-ip-row"><span>🎮 ${esc(p.mc_ip)}</span><button class="copy-btn" onclick="copyText('${esc(p.mc_ip)}','IP copied!')">Copy</button></div>` : ''}
+        <div class="p-links">
+          ${p.discord_link ? `<a href="${esc(p.discord_link)}" target="_blank" rel="noopener" class="btn btn-purple btn-sm">💬 Discord</a>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAdminPartners(partners) {
+  const el = document.getElementById('p-admin-list');
+  if (!partners || partners.error || !partners.length) { el.innerHTML = '<p style="color:var(--text2);font-size:.85rem">Koi partner nahi</p>'; return; }
+  el.innerHTML = partners.map(p => `
+    <div class="a-file-item">
+      <span>🤝</span>
+      <span class="a-fi-name">${esc(p.name)}</span>
+      ${p.mc_ip ? `<span class="a-fi-cat" style="font-family:monospace">${esc(p.mc_ip)}</span>` : ''}
+      <button class="del-btn" onclick="deletePartner(${p.id})">✕ Delete</button>
+    </div>`).join('');
+}
+
+async function addPartner() {
+  const name = document.getElementById('p-name').value.trim();
+  if (!name) return toast('Partner name required!', true);
+  setBtnLoad('p-add-btn', true);
+  const result = await api({
+    action: 'add_partner',
+    name,
+    description:  document.getElementById('p-desc').value.trim(),
+    mc_ip:        document.getElementById('p-ip').value.trim(),
+    discord_link: document.getElementById('p-dc').value.trim(),
+    banner_img:   document.getElementById('p-img').value.trim(),
+    tags:         document.getElementById('p-tags').value.trim(),
+  }, 'POST');
+  if (result.error) toast(result.error, true);
+  else {
+    toast('✅ Partner added!');
+    ['p-name','p-desc','p-ip','p-dc','p-img','p-tags'].forEach(id => document.getElementById(id).value = '');
+    await loadPartners();
+  }
+  setBtnLoad('p-add-btn', false);
+}
+
+async function deletePartner(id) {
+  if (!confirm('Partner ko delete karein?')) return;
+  const r = await api({ action: 'delete_partner', id }, 'POST');
+  if (r.error) toast(r.error, true);
+  else { toast('🗑️ Partner removed!'); await loadPartners(); }
+}
+
+// ================================================================
+// MC STATUS
+// ================================================================
+async function checkMCStatus() {
+  const ip = getSetting('promo_mc_ip', '');
+  if (!ip) return;
+  const dot  = document.getElementById('status-dot');
+  const text = document.getElementById('status-text');
+  dot.className = 'dot dot-gray';
+  text.textContent = 'Checking...';
+  text.style.color = 'var(--text2)';
+  try {
+    const r = await fetch(`https://api.mcsrvstat.us/2/${encodeURIComponent(ip)}`);
+    const d = await r.json();
+    if (d.online) {
+      dot.className = 'dot dot-green';
+      text.textContent = '🟢 Online';
+      text.style.color = 'var(--accent)';
+      const online = d.players?.online ?? 0;
+      const max    = d.players?.max ?? 0;
+      document.getElementById('mc-extra').style.display = 'block';
+      document.getElementById('players-fill').style.width = max ? Math.min(online/max*100,100)+'%' : '0%';
+      document.getElementById('players-text').textContent = `👥 ${online} / ${max} players online`;
+    } else {
+      dot.className = 'dot dot-red';
+      text.textContent = '🔴 Offline';
+      text.style.color = 'var(--red)';
+      document.getElementById('mc-extra').style.display = 'none';
+    }
+  } catch { text.textContent = '⚠️ Status fetch nahi hua'; }
+}
+
+function copyMCIP() {
+  const ip = getSetting('promo_mc_ip','');
+  if (ip) copyText(ip, '📋 IP Copied!');
+}
+
+// ================================================================
+// FEATURE CARDS
+// ================================================================
+const defaultCards = [
+  { icon:'📦', title:'Free Downloads', desc:'Sabhi resources completely free hain. Setups, maps, plugins, configs, models — sab kuch bina kisi charge ke.' },
+  { icon:'🎯', title:'Organized Categories', desc:'Har cheez properly categorized hai taaki aap exactly woh dhundh sake jo aapko chahiye. No clutter, pure value.' },
+  { icon:'⚡', title:'Regular Updates', desc:'Naye resources regularly add kiye jaate hain. Latest Minecraft plugins, setups aur bahut kuch milta rehta hai.' },
+  { icon:'🌐', title:'Active Community', desc:'Our Discord server pe developers hain jo help karte hain, share karte hain aur collaborate karte hain.' },
+];
+
+function getFeatureCards() {
+  try { return JSON.parse(getSetting('feature_cards', '[]')) || defaultCards; }
+  catch { return defaultCards; }
+}
+
+function renderFeatureCards() {
+  const cards = getFeatureCards();
+  document.getElementById('features-grid').innerHTML = cards.map(c => `
+    <div class="feature-card">
+      <div class="feature-icon">${c.icon}</div>
+      <h3>${esc(c.title)}</h3>
+      <p>${esc(c.desc)}</p>
+    </div>`).join('');
+}
+
+function renderAdminFeatureCards() {
+  const cards = getFeatureCards();
+  document.getElementById('feature-cards-admin').innerHTML = cards.map((c,i) => `
+    <div style="margin-bottom:1rem;padding:1rem;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+      <div style="font-weight:700;font-size:.8rem;color:var(--text2);margin-bottom:.7rem">Card ${i+1}</div>
+      <div style="display:flex;gap:.5rem;margin-bottom:.6rem">
+        <input class="form-control" style="width:72px" id="fc-icon-${i}" value="${esc(c.icon)}" placeholder="🎮">
+        <input class="form-control" id="fc-title-${i}" value="${esc(c.title)}" placeholder="Title">
+      </div>
+      <textarea class="form-control" id="fc-desc-${i}" style="min-height:56px">${esc(c.desc)}</textarea>
+    </div>`).join('');
+}
+
+async function saveFeatureCards() {
+  const cards = getFeatureCards().map((c,i) => ({
+    icon:  document.getElementById(`fc-icon-${i}`)?.value  ?? c.icon,
+    title: document.getElementById(`fc-title-${i}`)?.value ?? c.title,
+    desc:  document.getElementById(`fc-desc-${i}`)?.value  ?? c.desc,
+  }));
+  await saveSetting('feature_cards', JSON.stringify(cards));
+  renderFeatureCards();
+  toast('✅ Feature cards saved!');
+}
+
+// ================================================================
+// AUTH
+// ================================================================
+function openAuth(tab) { document.getElementById('auth-modal').classList.add('open'); switchTab(tab); }
+function closeAuth()   { document.getElementById('auth-modal').classList.remove('open'); clearAlert(); }
+function switchTab(tab) {
+  document.getElementById('form-login').style.display    = tab==='login'    ? 'block':'none';
+  document.getElementById('form-register').style.display = tab==='register' ? 'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',    tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  clearAlert();
+}
+function showAlert(msg,ok) { document.getElementById('auth-alert').innerHTML = `<div class="alert ${ok?'alert-ok':'alert-err'}">${msg}</div>`; }
+function clearAlert() { document.getElementById('auth-alert').innerHTML = ''; }
+
+async function doRegister() {
+  const u = document.getElementById('r-user').value.trim();
+  const e = document.getElementById('r-email').value.trim();
+  const p = document.getElementById('r-pass').value;
+  if (!u||!e||!p) return showAlert('Sabhi fields fill karein!');
+  if (p.length < 4) return showAlert('Password min 4 characters!');
+  setBtnLoad('reg-btn', true);
+  const r = await api({ action:'register', username:u, email:e, password:p }, 'POST');
+  if (r.error) showAlert(r.error);
+  else { showAlert(r.is_admin ? '🎉 Owner account created! Login karein.' : '✅ Account created! Login karein.', true); setTimeout(() => switchTab('login'), 1800); }
+  setBtnLoad('reg-btn', false);
+}
+
+async function doLogin() {
+  const u = document.getElementById('l-user').value.trim();
+  const p = document.getElementById('l-pass').value;
+  if (!u||!p) return showAlert('Fields required!');
+  setBtnLoad('login-btn', true);
+  const r = await api({ action:'login', username:u, password:p }, 'POST');
+  if (r.error) showAlert(r.error);
+  else { currentUser = r.user; updateNavRight(); closeAuth(); const rankLabel = r.user.rank === 'owner' ? ' 👑 Owner' : r.user.rank === 'admin' ? ' ⚙️ Admin' : r.user.rank === 'staff' ? ' 🛡️ Staff' : ''; toast(`✅ Welcome, ${r.user.username}${rankLabel}!`); }
+  setBtnLoad('login-btn', false);
+}
+
+async function doLogout() {
+  await api({ action:'logout' }, 'POST');
+  currentUser = null;
+  updateNavRight();
+  toast('Logout ho gaye!');
+}
+
+async function checkSession() {
+  const r = await api({ action:'check_session' });
+  if (r.user) { currentUser = r.user; updateNavRight(); }
+}
+
+function updateNavRight() {
+  const nr = document.getElementById('nav-right');
+  if (currentUser) {
+    nr.innerHTML = `
+      <div class="user-chip">
+        <span>${esc(currentUser.username)}</span>
+        ${currentUser.rank === 'owner' ? '<span class="badge-owner">👑 OWNER</span>' : currentUser.rank === 'admin' ? '<span class="badge-admin">⚙️ ADMIN</span>' : currentUser.rank === 'staff' ? '<span class="badge-staff">🛡️ STAFF</span>' : ''}
+      </div>
+      ${(currentUser.is_admin==1 || currentUser.rank==='staff') ? `<button class="btn btn-purple btn-sm" onclick="openAdmin()">${currentUser.rank==='staff' ? '🛡️ Staff' : '⚙️ Admin'} Panel</button>` : ''}
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">Logout</button>`;
+  } else {
+    nr.innerHTML = `
+      <button class="btn btn-outline btn-sm" onclick="openAuth('login')">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="openAuth('register')">Register</button>`;
+  }
+}
+
+// ================================================================
+// ADMIN PANEL
+// ================================================================
+function openAdmin() {
+  if (!currentUser?.is_admin && currentUser?.rank !== 'staff') return;
+  // Show/hide admin-only nav items based on rank
+  const isStaff = currentUser.rank === 'staff' && !currentUser.is_admin;
+  document.querySelectorAll('.admin-only').forEach(el => {
+    el.style.display = isStaff ? 'none' : '';
+  });
+  // Update panel title
+  const titleEl = document.getElementById('admin-panel-title');
+  if (titleEl) {
+    if (currentUser.rank === 'owner') titleEl.textContent = '👑 Owner Panel';
+    else if (currentUser.rank === 'admin') titleEl.textContent = '⚙️ Admin Panel';
+    else titleEl.textContent = '🛡️ Staff Panel';
+  }
+  // Staff: open categories by default
+  if (isStaff) {
+    const catsNav = document.querySelector('[onclick*="cats-a"]');
+    if (catsNav) { aSection('cats-a', catsNav); }
+  }
+  document.getElementById('admin-overlay').classList.add('open');
+  fillAdminForms();
+  renderAdminFeatureCards();
+}
+function closeAdmin() { document.getElementById('admin-overlay').classList.remove('open'); }
+
+function aSection(id, el) {
+  document.querySelectorAll('.a-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.a-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('as-' + id).classList.add('active');
+  el.classList.add('active');
+  // Lazy load sections
+  if (id === 'users-a')      loadUsers();
+  if (id === 'pages-a')      { loadCustomPages().then(() => renderAdminPageList()); }
+  if (id === 'cats-a')       loadAdminCategories();
+  if (id === 'announce-a')   loadAdminAnnouncements();
+  if (id === 'stats-a')      loadStats();
+}
+
+function fillAdminForms() {
+  document.getElementById('a-sitename').value    = getSetting('site_name','DEV');
+  document.getElementById('a-smallicon').value   = getSetting('small_icon','⚡');
+  document.getElementById('a-logo-url').value    = getSetting('logo_url','');
+  document.getElementById('a-favicon-url').value = getSetting('favicon_url','');
+  document.getElementById('a-discord-link').value= getSetting('discord_link','');
+  document.getElementById('a-hero-title').value  = getSetting('hero_title','');
+  document.getElementById('a-hero-desc').value   = getSetting('hero_desc','');
+  document.getElementById('a-mc-ip').value       = getSetting('promo_mc_ip','');
+  document.getElementById('a-mc-name').value     = getSetting('promo_mc_name','');
+  document.getElementById('a-dc-promo-link').value = getSetting('promo_dc_link','');
+  document.getElementById('a-dc-promo-desc').value = getSetting('promo_dc_desc','');
+  document.getElementById('nl-home-a').value  = getSetting('nav_home','HOME');
+  document.getElementById('nl-mc-a').value    = getSetting('nav_minecraft','MINECRAFT');
+  document.getElementById('nl-dc-a').value    = getSetting('nav_discord','DISCORD');
+  document.getElementById('nl-part-a').value  = getSetting('nav_partner','PARTNER');
+  document.getElementById('nl-promo-a').value = getSetting('nav_promo','PROMOTION');
+  document.getElementById('a-seo-desc').value = getSetting('seo_description','');
+  document.getElementById('a-seo-kw').value   = getSetting('seo_keywords','');
+  document.getElementById('a-footer-text').value = getSetting('footer_text','');
+  document.getElementById('a-maint-msg').value   = getSetting('maintenance_msg','');
+  const colors = ['accent','accent2','bg','text'];
+  colors.forEach(k => {
+    const val = getSetting('color_'+k, { accent:'#00ff88', accent2:'#7c3aed', bg:'#0a0a0f', text:'#e8e8f0' }[k]||'');
+    const ci = document.getElementById('c-'+k); if (ci) ci.value = val;
+    const ch = document.getElementById('c-'+k+'-hex'); if (ch) ch.value = val;
+  });
+  updateLogoPreview();
+  updateMaintenanceBtnUI();
+}
+
+function updateLogoPreview() {
+  const url = document.getElementById('a-logo-url')?.value?.trim();
+  const box = document.getElementById('logo-preview-box');
+  if (!box) return;
+  if (url) box.innerHTML = `<img src="${esc(url)}" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='<span style=\\'font-size:2rem\\'>${esc(getSetting('small_icon','⚡'))}</span>'">`;
+  else box.innerHTML = `<span style="font-size:2rem">${esc(getSetting('small_icon','⚡'))}</span>`;
+}
+
+// Theme
+function liveColor(varName, val) { document.documentElement.style.setProperty(varName, val); }
+
+async function saveTheme() {
+  await Promise.all([
+    saveSetting('color_accent',  document.getElementById('c-accent').value),
+    saveSetting('color_accent2', document.getElementById('c-accent2').value),
+    saveSetting('color_bg',      document.getElementById('c-bg').value),
+    saveSetting('color_text',    document.getElementById('c-text').value),
+  ]);
+  applyTheme();
+  toast('✅ Theme saved!');
+}
+
+async function resetTheme() {
+  await Promise.all([
+    saveSetting('color_accent','#00ff88'), saveSetting('color_accent2','#7c3aed'),
+    saveSetting('color_bg','#0a0a0f'),     saveSetting('color_text','#e8e8f0'),
+  ]);
+  applyTheme(); fillAdminForms(); toast('✅ Theme reset!');
+}
+
+// Home
+async function saveHomePage() {
+  await Promise.all([
+    saveSetting('hero_title', document.getElementById('a-hero-title').value),
+    saveSetting('hero_desc',  document.getElementById('a-hero-desc').value),
+  ]);
+  applyHeroContent();
+  toast('✅ Home page saved!');
+}
+
+// Nav
+async function saveNavLabels() {
+  await Promise.all([
+    saveSetting('nav_home',      document.getElementById('nl-home-a').value),
+    saveSetting('nav_minecraft', document.getElementById('nl-mc-a').value),
+    saveSetting('nav_discord',   document.getElementById('nl-dc-a').value),
+    saveSetting('nav_partner',   document.getElementById('nl-part-a').value),
+    saveSetting('nav_promo',     document.getElementById('nl-promo-a').value),
+  ]);
+  applyNavLabels();
+  toast('✅ Labels saved!');
+}
+
+// Promo
+async function savePromoMC() {
+  const ip   = document.getElementById('a-mc-ip').value.trim();
+  const name = document.getElementById('a-mc-name').value.trim();
+  await Promise.all([saveSetting('promo_mc_ip', ip), saveSetting('promo_mc_name', name)]);
+  applyPromoContent();
+  toast('✅ MC promo saved!');
+}
+
+async function savePromoDC() {
+  const link = document.getElementById('a-dc-promo-link').value.trim();
+  const desc = document.getElementById('a-dc-promo-desc').value.trim();
+  await Promise.all([saveSetting('promo_dc_link', link), saveSetting('promo_dc_desc', desc)]);
+  applyPromoContent();
+  applyDiscordLinks();
+  toast('✅ Discord promo saved!');
+}
+
+// Users
+async function loadUsers() {
+  const data = await api({ action: 'get_users' });
+  const el = document.getElementById('users-admin-list');
+  if (data.error || !data.length) { el.innerHTML = '<p style="color:var(--text2)">Koi user nahi</p>'; return; }
+  el.innerHTML = data.map(u => `
+    <div class="a-card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem">
+      <div>
+        <div style="font-weight:700">${esc(u.username)} ${getRankBadge(u.rank)}</div>
+        <div style="font-size:.78rem;color:var(--text2)">${esc(u.email)} • Joined: ${u.created_at}</div>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+        <select class="rank-select" onchange="setUserRank(${u.id}, this.value)" ${(u.rank==='owner' && currentUser?.rank!=='owner') ? 'disabled title="Sirf owner change kar sakta hai"' : ''}>
+          <option value="member" ${u.rank==='member'?'selected':''}>👤 Member</option>
+          <option value="staff" ${u.rank==='staff'?'selected':''}>🛡️ Staff</option>
+          <option value="admin" ${u.rank==='admin'?'selected':''}>⚙️ Admin</option>
+          <option value="owner" ${u.rank==='owner'?'selected':''} ${currentUser?.rank!=='owner'?'disabled':''}>👑 Owner</option>
+        </select>
+        ${u.id != currentUser?.id ? `<button class="del-btn" onclick="deleteUser(${u.id})">Delete</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+async function toggleAdmin(id, val) {
+  const r = await api({ action:'toggle_admin', id, value:val }, 'POST');
+  if (r.error) toast(r.error, true);
+  else { toast(val ? '✅ Admin granted!' : 'Admin removed'); loadUsers(); }
+}
+
+// Rank badge helper
+function getRankBadge(rank) {
+  if (rank === 'owner') return '<span class="badge-owner">👑 OWNER</span>';
+  if (rank === 'admin') return '<span class="badge-admin">⚙️ ADMIN</span>';
+  if (rank === 'staff') return '<span class="badge-staff">🛡️ STAFF</span>';
+  return '';
+}
+
+// Set user rank
+async function setUserRank(id, rank) {
+  const labels = { member: 'Member', staff: '🛡️ Staff', admin: '⚙️ Admin', owner: '👑 Owner' };
+  if (!confirm(`Is user ko "${labels[rank] || rank}" rank dena chahte hain?`)) { loadUsers(); return; }
+  const r = await api({ action: 'set_rank', id, rank }, 'POST');
+  if (r.error) { toast(r.error, true); loadUsers(); }
+  else toast(`✅ Rank set to ${labels[rank] || rank}!`);
+  loadUsers();
+}
+
+async function deleteUser(id) {
+  if (!confirm('User ko delete karein?')) return;
+  const r = await api({ action:'delete_user', id }, 'POST');
+  if (r.error) toast(r.error, true);
+  else { toast('🗑️ User deleted'); loadUsers(); }
+}
+
+// ================================================================
+// CUSTOM PAGES
+// ================================================================
+let customPages = [];
+
+async function loadCustomPages() {
+  const data = await api({ action: 'get_pages' });
+  if (!data.error) {
+    customPages = data;
+    renderCustomNavLinks();
+  }
+}
+
+function renderCustomNavLinks() {
+  const cont = document.getElementById('custom-nav-links');
+  if (!cont) return;
+  cont.innerHTML = customPages
+    .filter(p => p.show_in_nav == 1)
+    .map(p => `<a onclick="showCustomPage('${esc(p.slug)}')" id="nl-page-${esc(p.slug)}">${esc(p.icon)} ${esc(p.nav_label)}</a>`)
+    .join('');
+}
+
+function showCustomPage(slug) {
+  const page = customPages.find(p => p.slug === slug);
+  if (!page) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-custom').classList.add('active');
+  const navEl = document.getElementById('nl-page-' + slug);
+  if (navEl) navEl.classList.add('active');
+  document.getElementById('custom-page-title').textContent = page.title;
+  document.getElementById('custom-page-body').innerHTML = page.content || '<p style="color:var(--text2)">Content abhi available nahi hai.</p>';
+}
+
+function autoSlug() {
+  const title = document.getElementById('pg-title').value;
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  document.getElementById('pg-slug').value = slug;
+  const nav = document.getElementById('pg-navlabel');
+  if (!nav.value) nav.value = title.toUpperCase().slice(0,12);
+}
+
+async function addPage() {
+  const title   = document.getElementById('pg-title').value.trim();
+  const slug    = document.getElementById('pg-slug').value.trim();
+  const navLabel= document.getElementById('pg-navlabel').value.trim() || title.toUpperCase();
+  const icon    = document.getElementById('pg-icon').value.trim() || '📄';
+  const content = document.getElementById('pg-content').value;
+  const showNav = document.getElementById('pg-shownav').checked ? 1 : 0;
+  if (!title || !slug) return toast('Title aur slug required!', true);
+  setBtnLoad('pg-add-btn', true);
+  const r = await api({ action:'add_page', title, slug, nav_label:navLabel, icon, content, show_in_nav:showNav }, 'POST');
+  if (r.error) toast(r.error, true);
+  else {
+    toast('✅ Page created!');
+    ['pg-title','pg-slug','pg-navlabel','pg-content'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('pg-icon').value = '📄';
+    document.getElementById('pg-shownav').checked = true;
+    await loadCustomPages();
+    renderAdminPageList();
+  }
+  setBtnLoad('pg-add-btn', false);
+}
+
+async function deletePage(id) {
+  if (!confirm('Page delete karein?')) return;
+  const r = await api({ action:'delete_page', id }, 'POST');
+  if (r.error) toast(r.error, true);
+  else { toast('🗑️ Page deleted!'); await loadCustomPages(); renderAdminPageList(); }
+}
+
+function renderAdminPageList() {
+  const el = document.getElementById('pages-admin-list');
+  if (!customPages.length) { el.innerHTML = '<p style="color:var(--text2);font-size:.85rem">Koi page nahi banaya abhi.</p>'; return; }
+  el.innerHTML = customPages.map(p => `
+    <div class="a-file-item" style="flex-wrap:wrap;gap:.4rem">
+      <span style="font-size:1.1rem">${esc(p.icon)}</span>
+      <span class="a-fi-name">${esc(p.title)}</span>
+      <span class="a-fi-cat" style="font-family:monospace;font-size:.72rem">/${esc(p.slug)}</span>
+      <span style="font-size:.7rem;opacity:.6">${p.show_in_nav=='1'?'✓ Nav':'Hidden'}</span>
+      <button class="btn btn-outline btn-sm" style="font-size:.72rem;padding:2px 8px" onclick="openPageEdit(${p.id})">✏️ Edit</button>
+      <button class="del-btn" onclick="deletePage(${p.id})">✕</button>
+    </div>
+    <div class="pg-edit-card" id="pg-edit-${p.id}" style="display:none">
+      <div style="display:grid;grid-template-columns:60px 1fr 100px;gap:8px;margin-bottom:.5rem">
+        <input class="form-control" id="pge-icon-${p.id}" value="${esc(p.icon)}" style="font-size:1.2rem;text-align:center">
+        <input class="form-control" id="pge-title-${p.id}" value="${esc(p.title)}" placeholder="Title">
+        <input class="form-control" id="pge-nav-${p.id}" value="${esc(p.nav_label)}" placeholder="Nav label">
+      </div>
+      <textarea class="form-control" id="pge-content-${p.id}" style="min-height:120px;font-family:monospace;font-size:.8rem;margin-bottom:.5rem">${esc(p.content||'')}</textarea>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:.5rem">
+        <input type="checkbox" id="pge-nav-show-${p.id}" ${p.show_in_nav=='1'?'checked':''} style="width:14px;height:14px">
+        <label for="pge-nav-show-${p.id}" style="margin:0;font-size:.82rem">Navigation mein dikhao</label>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="savePage(${p.id})">💾 Save</button>
+      <button class="btn btn-outline btn-sm" onclick="closePageEdit(${p.id})" style="margin-left:6px">Cancel</button>
+    </div>`).join('');
+}
+
+function openPageEdit(id) {
+  document.querySelectorAll('[id^="pg-edit-"]').forEach(el => el.style.display='none');
+  document.getElementById('pg-edit-'+id).style.display='block';
+}
+function closePageEdit(id) { document.getElementById('pg-edit-'+id).style.display='none'; }
+
+async function savePage(id) {
+  const title   = document.getElementById(`pge-title-${id}`).value.trim();
+  const icon    = document.getElementById(`pge-icon-${id}`).value.trim();
+  const navLabel= document.getElementById(`pge-nav-${id}`).value.trim();
+  const content = document.getElementById(`pge-content-${id}`).value;
+  const showNav = document.getElementById(`pge-nav-show-${id}`).checked ? 1 : 0;
+  if (!title) return toast('Title required!', true);
+  const r = await api({ action:'update_page', id, title, icon, nav_label:navLabel, content, show_in_nav:showNav }, 'POST');
+  if (r.error) toast(r.error, true);
+  else {
+    toast('✅ Page updated!');
+    await loadCustomPages();
+    renderAdminPageList();
+  }
+}
+
+// ================================================================
+// CATEGORIES
+// ================================================================
+let allCategories = [];
+
+async function loadAdminCategories() {
+  const data = await api({ action: 'get_categories' });
+  if (!data.error) {
+    allCategories = data;
+    renderCatList('mc');
+    renderCatList('dc');
+    rebuildFileSelects();
+  }
+}
+
+function renderCatList(type) {
+  const el = document.getElementById(`${type}-cats-list`);
+  const cats = allCategories.filter(c => c.type === type);
+  if (!cats.length) { el.innerHTML = '<p style="color:var(--text2);font-size:.85rem">Koi category nahi</p>'; return; }
+  el.innerHTML = cats.map(c => `
+    <div class="a-file-item">
+      <span style="font-size:1.1rem">${esc(c.icon)}</span>
+      <span class="a-fi-name">${esc(c.label)}</span>
+      <span class="a-fi-cat" style="font-family:monospace">${esc(c.slug)}</span>
+      ${c.is_private == 1 ? '<span class="badge-private">🔒 PRIVATE</span>' : ''}
+      <button class="del-btn" onclick="deleteCategory(${c.id})">✕ Delete</button>
+    </div>`).join('');
+}
+
+function autoCatSlug() {
+  const label = document.getElementById('cat-label').value;
+  document.getElementById('cat-slug').value = label.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+}
+
+async function addCategory() {
+  const type      = document.getElementById('cat-type').value;
+  const label     = document.getElementById('cat-label').value.trim();
+  const slug      = document.getElementById('cat-slug').value.trim();
+  const icon      = document.getElementById('cat-icon').value.trim() || '📁';
+  const isPrivate = document.getElementById('cat-private')?.checked ? 1 : 0;
+  if (!label || !slug) return toast('Label aur slug required!', true);
+  setBtnLoad('cat-add-btn', true);
+  const r = await api({ action:'add_category', type, label, slug, icon, is_private: isPrivate }, 'POST');
+  if (r.error) toast(r.error, true);
+  else {
+    toast(isPrivate ? '🔒 Private category added!' : '✅ Category added!');
+    ['cat-label','cat-slug'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('cat-icon').value = '📁';
+    document.getElementById('cat-private').checked = false;
+    await loadAdminCategories();
+    catInfo[r.slug] = { icon, label, is_private: isPrivate };
+  }
+  setBtnLoad('cat-add-btn', false);
+}
+
+async function deleteCategory(id) {
+  if (!confirm('Category delete karein? Iske files bhi delete karne honge pehle.')) return;
+  const r = await api({ action:'delete_category', id }, 'POST');
+  if (r.error) toast(r.error, true);
+  else { toast('🗑️ Category deleted!'); await loadAdminCategories(); }
+}
+
+function rebuildFileSelects() {
+  ['mc','dc'].forEach(type => {
+    const sel = document.getElementById(`${type}-cat`);
+    if (!sel) return;
+    const cats = allCategories.filter(c => c.type === type);
+    if (cats.length) {
+      sel.innerHTML = cats.map(c => `<option value="${esc(c.slug)}">${esc(c.icon)} ${esc(c.label)}</option>`).join('');
+    }
+  });
+}
+
+// ================================================================
+// ANNOUNCEMENTS
+// ================================================================
+async function loadAnnouncements() {
+  const data = await api({ action: 'get_announcements' });
+  const bar = document.getElementById('announcement-bar');
+  if (!data.error && data.length) {
+    bar.innerHTML = data.map(a => `
+      <div class="ann-bar ann-${esc(a.type)}" id="ann-bar-${a.id}">
+        <span>${esc(a.message)}</span>
+        <button class="ann-close" onclick="document.getElementById('ann-bar-${a.id}').remove()">✕</button>
+      </div>`).join('');
+  }
+}
+
+async function loadAdminAnnouncements() {
+  const data = await api({ action: 'get_all_announcements' });
+  const el = document.getElementById('ann-admin-list');
+  if (data.error || !data.length) { el.innerHTML = '<p style="color:var(--text2);font-size:.85rem">Koi announcement nahi</p>'; return; }
+  el.innerHTML = data.map(a => `
+    <div class="a-file-item" style="flex-wrap:wrap">
+      <span class="ann-dot" style="width:10px;height:10px;border-radius:50%;background:${{info:'#60b8ff',success:'#00ff88',warning:'#fbbf24',error:'#f87171'}[a.type]||'#888'};flex-shrink:0"></span>
+      <span class="a-fi-name" style="flex:1;white-space:normal;font-size:.82rem">${esc(a.message)}</span>
+      <span class="a-fi-cat">${a.active=='1'?'🟢 Active':'⚫ Hidden'}</span>
+      <button class="btn btn-outline btn-sm" style="font-size:.72rem;padding:2px 8px" onclick="toggleAnn(${a.id},${a.active=='1'?0:1})">${a.active=='1'?'Hide':'Show'}</button>
+      <button class="del-btn" onclick="deleteAnn(${a.id})">✕</button>
+    </div>`).join('');
+}
+
+async function addAnnouncement() {
+  const msg  = document.getElementById('ann-msg').value.trim();
+  const type = document.getElementById('ann-type').value;
+  if (!msg) return toast('Message required!', true);
+  setBtnLoad('ann-add-btn', true);
+  const r = await api({ action:'add_announcement', message:msg, type }, 'POST');
+  if (r.error) toast(r.error, true);
+  else {
+    toast('📢 Announcement posted!');
+    document.getElementById('ann-msg').value = '';
+    await loadAdminAnnouncements();
+    await loadAnnouncements();
+  }
+  setBtnLoad('ann-add-btn', false);
+}
+
+async function toggleAnn(id, val) {
+  await api({ action:'toggle_announcement', id, active:val }, 'POST');
+  await loadAdminAnnouncements();
+  await loadAnnouncements();
+}
+
+async function deleteAnn(id) {
+  if (!confirm('Delete karein?')) return;
+  await api({ action:'delete_announcement', id }, 'POST');
+  await loadAdminAnnouncements();
+  await loadAnnouncements();
+}
+
+// ================================================================
+// SEO
+// ================================================================
+function applySEO() {
+  const desc = getSetting('seo_description','');
+  const kw   = getSetting('seo_keywords','');
+  let metaDesc = document.querySelector('meta[name="description"]');
+  if (!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name='description'; document.head.appendChild(metaDesc); }
+  metaDesc.content = desc;
+  let metaKw = document.querySelector('meta[name="keywords"]');
+  if (!metaKw) { metaKw = document.createElement('meta'); metaKw.name='keywords'; document.head.appendChild(metaKw); }
+  metaKw.content = kw;
+}
+
+async function saveSEO() {
+  await Promise.all([
+    saveSetting('seo_description', document.getElementById('a-seo-desc').value),
+    saveSetting('seo_keywords',    document.getElementById('a-seo-kw').value),
+  ]);
+  applySEO();
+  toast('✅ SEO saved!');
+}
+
+// ================================================================
+// FOOTER
+// ================================================================
+function applyFooter() {
+  const txt = getSetting('footer_text','');
+  const el  = document.getElementById('footer-content');
+  if (el && txt) el.innerHTML = txt;
+}
+
+async function saveFooter() {
+  await saveSetting('footer_text', document.getElementById('a-footer-text').value);
+  applyFooter();
+  toast('✅ Footer saved!');
+}
+
+// ================================================================
+// MAINTENANCE
+// ================================================================
+function applyMaintenanceUI() {
+  updateMaintenanceBtnUI();
+}
+
+function updateMaintenanceBtnUI() {
+  const btn = document.getElementById('maint-toggle-btn');
+  if (!btn) return;
+  const on = getSetting('maintenance_mode','0') === '1';
+  btn.textContent = on ? '🔴 ON — Click to Turn OFF' : '🟢 OFF — Click to Turn ON';
+  btn.className = on ? 'btn btn-outline btn-sm' : 'btn btn-primary btn-sm';
+  btn.style.borderColor = on ? 'var(--red)' : '';
+  btn.style.color = on ? 'var(--red)' : '';
+}
+
+async function toggleMaintenance() {
+  const on = getSetting('maintenance_mode','0') === '1';
+  const newVal = on ? '0' : '1';
+  await saveSetting('maintenance_mode', newVal);
+  S['maintenance_mode'] = newVal;
+  updateMaintenanceBtnUI();
+  toast(newVal === '1' ? '⚠️ Maintenance mode ON!' : '✅ Site live hai!', newVal === '1');
+}
+
+async function saveMaintenance() {
+  await saveSetting('maintenance_msg', document.getElementById('a-maint-msg').value);
+  toast('✅ Maintenance message saved!');
+}
+
+// ================================================================
+// STATS
+// ================================================================
+async function loadStats() {
+  const data = await api({ action: 'get_stats' });
+  const el = document.getElementById('stats-cards');
+  if (data.error) { el.innerHTML = '<p style="color:var(--text2)">Stats load nahi hue</p>'; return; }
+  const items = [
+    { icon:'🎮', label:'Minecraft Files', val:data.mc_files },
+    { icon:'💬', label:'Discord Files',   val:data.dc_files },
+    { icon:'👥', label:'Users',           val:data.users },
+    { icon:'🤝', label:'Partners',        val:data.partners },
+    { icon:'📄', label:'Custom Pages',    val:data.pages },
+    { icon:'🏷️', label:'Categories',      val:data.categories },
+  ];
+  el.innerHTML = items.map(i => `
+    <div class="stat-card">
+      <div style="font-size:1.8rem;margin-bottom:.3rem">${i.icon}</div>
+      <div class="stat-num">${i.val}</div>
+      <div class="stat-lbl">${i.label}</div>
+    </div>`).join('');
+}
+
+
+// ================================================================
+// PAGE NAVIGATION
+// ================================================================
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page)?.classList.add('active');
+  const navId = { home:'nav-home', minecraft:'nl-minecraft', discord:'nl-discord', partner:'nl-partner', promo:'nl-promo' }[page];
+  if (navId) document.getElementById(navId)?.classList.add('active');
+  if (page === 'promo') checkMCStatus();
+}
+
+// ================================================================
+// UTILITIES
+// ================================================================
+function esc(str) { return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function copyText(text, msg = 'Copied!') {
+  navigator.clipboard.writeText(text).then(() => toast('📋 ' + msg)).catch(() => toast('Copy failed', true));
+}
+
+let _toastTimer;
+function toast(msg, isErr = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isErr ? 'show toast-err' : 'show';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.className = '', 3200);
+}
+
+function setBtnLoad(id, loading) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  if (loading) { btn._orig = btn.textContent; btn.textContent = '⏳ Wait...'; btn.disabled = true; }
+  else { if (btn._orig) btn.textContent = btn._orig; btn.disabled = false; }
+}
+
+// Modal backdrop close
+document.getElementById('auth-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeAuth(); });
+document.getElementById('admin-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeAdmin(); });
+
+// ================================================================
+// START
+// ================================================================
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
